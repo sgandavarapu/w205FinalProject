@@ -20,7 +20,7 @@ class ParseTweet(Bolt):
 	valid_words = []
 	
 	#Filter out tweets that do not have word of interest
-	if 'bitcoin' in words or 'Bitcoin' in words or 'BITCOIN' in words or 'BitCoin' in words:
+	if 'bitcoin' in words or 'Bitcoin' in words or 'BITCOIN' in words or 'BitCoin' in words or '#bitcoin' in words or 'bit coin' in words:
         	
 		# Filter out the hash tags, RT, @ and urls
 	               	
@@ -49,5 +49,5 @@ class ParseTweet(Bolt):
 
         # Emit all the words
         self.emit([valid_words])
-	#self.log(valid_words)
+	self.log(valid_words)
         # tuple acknowledgement is handled automatically
