@@ -74,10 +74,9 @@ class Tweets(Spout):
             tweet = self.queue().get(timeout = 0.1) 
             if tweet:
                 self.queue().task_done()
-                self.emit([tweet])
+                self.emit([tweet.encode('utf-8')])
  
         except Queue.Empty:
-            self.log("Empty queue exception ")
             time.sleep(0.1) 
 
     def ack(self, tup_id):
