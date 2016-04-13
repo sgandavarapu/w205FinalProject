@@ -33,7 +33,7 @@
           options
           {"transaction-spout" :shuffle}
           "bolts.transactionlogger.TransactionLogger"
-          ["timestamp", "hashkey"])
+          ["timestamp", "hashkey", "num_transactions"])
      
     }
   ]

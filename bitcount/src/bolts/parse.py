@@ -12,8 +12,8 @@ def ascii_string(s):
 class ParseTweet(Bolt):
 
     def process(self, tup):
-        tweet = tup.values[0]  # extract the tweet
-        if 'bitcoin'.upper() in tweet.upper():
+        tweet = tup.values[0].strip("\"?><,'.:;)")  # extract the tweet       
+        if 'bitcoin'.upper() in tweet.upper() and ascii_string(tweet):
           # Emit tweets which contain the word bitcoin
             self.emit([tweet])
 

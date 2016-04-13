@@ -7,4 +7,5 @@ CREATE TABLE tweetcount
 
 CREATE TABLE transactioncount
        (timestamp TIMESTAMP NOT NULL,
-       hashkey PRIMARY KEY TEXT NOT NULL);
+       hashkey TEXT NOT NULL,
+       transaction_id TEXT NOT NULL);

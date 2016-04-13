@@ -10,9 +10,9 @@ class Transactions(Spout):
         1==1
         
     def next_tuple(self):
-        time.sleep(0.1)
+        time.sleep(10)
         response_dict = blockexplorer.get_latest_block()
-        self.emit([(response_dict.hash, response_dict.time)])
+        self.emit([(response_dict.hash, response_dict.time, response_dict.tx_indexes)])
         
     def ack(self, tup_id):
         pass # if a tuple is processed properly, do nothing

@@ -13,18 +13,18 @@ class TransactionLogger(Bolt):
     def process(self, tup):
         response_dict = tup.values[0]
         hashkey = response_dict[0]
-        print(hashkey)
         timestamp = datetime.datetime.fromtimestamp(response_dict[1]).strftime('%Y-%m-%d %H:%M:%S')
-        print(timestamp)
+        transactions = response_dict[2]
         conn = psycopg2.connect(database="bitcount", user="postgres", password="pass", host="localhost", port="5432")
         cur = conn.cursor()
         cur.execute("SELECT count(timestamp) FROM transactioncount WHERE hashkey='%s'" % (hashkey))
         tcount = cur.fetchone()[0]
         if tcount==0:
-            cur.execute("INSERT INTO transactioncount (timestamp, hashkey) VALUES ('%s', '%s')" % (timestamp, hashkey))
-            conn.commit()
-        self.emit([timestamp, hashkey])
+            for transaction in transactions:
+                cur.execute("INSERT INTO transactioncount (timestamp, hashkey, transaction_id) VALUES ('%s', '%s', '%s')" % (timestamp, hashkey, str(transaction)))
+                conn.commit()
+        self.emit([timestamp, hashkey, len(transactions)])
         # Log the count - just to see the topology running
-        self.log('%s: %s' % (hashkey, timestamp))
+        self.log('%s: %s transaction num: %d' % (hashkey, timestamp, len(transactions)))
 
             

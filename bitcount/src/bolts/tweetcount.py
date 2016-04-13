@@ -12,15 +12,14 @@ class TweetCounter(Bolt):
 #self.redis = StrictRedis()
 
     def process(self, tup):
-        tweet = tup.values[0].encode('utf-8')
-	dt = '{:%m/%d/%Y %H:%M:%S}'.format(datetime.now()).encode('utf-8')
+        tweet = tup.values[0]
+	dt = '{:%m/%d/%Y %H:%M:%S}'.format(datetime.now())
 
         #Save to table
 	conn = psycopg2.connect(database="bitcount", user="postgres", password="pass", host="localhost", port="5432")
         cur = conn.cursor()
-	cur.execute("INSERT INTO tweetcount (timestamp, tweet) VALUES ('%s','%s')" % (dt, tweet.replace("'","\'")))
+	cur.execute("INSERT INTO tweetcount (timestamp, tweet) VALUES ('%s','%s')" % (dt, tweet.replace("'","")))
 	conn.commit()
 	self.emit([tweet,dt])
         self.log('%s: %s' % (tweet, dt))
-	#self.log(word2)
 	
