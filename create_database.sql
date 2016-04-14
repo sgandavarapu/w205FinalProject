@@ -2,7 +2,7 @@ CREATE DATABASE bitcount;
 \c bitcount;
 
 CREATE TABLE tweetcount
-       (timestamp TIMESTAMP PRIMARY KEY NOT NULL,
+       (timestamp TIMESTAMP NOT NULL,
        tweet TEXT NOT NULL);
 
 CREATE TABLE transactioncount
