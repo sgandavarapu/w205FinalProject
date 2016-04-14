@@ -4,7 +4,7 @@ CREATE TABLE compare_traffic AS
        COUNT(DISTINCT a.transaction_id) as num_transactions, 
        COUNT(DISTINCT b.tweet) as num_tweets
 FROM transactioncount a
-     INNER JOIN
+     LEFT JOIN
      tweetcount b
      ON date_part('hour', a.timestamp) = date_part('hour', b.timestamp)
 GROUP BY 1,2);
