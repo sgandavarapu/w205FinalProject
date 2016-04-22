@@ -9,7 +9,6 @@ class TweetCounter(Bolt):
 
     def initialize(self, conf, ctx):
         1==1  
-#self.redis = StrictRedis()
 
     def process(self, tup):
         tweet = tup.values[0]

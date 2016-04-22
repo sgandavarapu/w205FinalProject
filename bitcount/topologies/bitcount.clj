@@ -9,6 +9,7 @@
           options
           "spouts.tweets.Tweets"
           ["tweet"]
+          :p 2          
           )
      "transaction-spout" (python-spout-spec
           options
