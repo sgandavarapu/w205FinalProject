@@ -8,7 +8,7 @@ from datetime import datetime
 class TweetCounter(Bolt):
 
     def initialize(self, conf, ctx):
-        1==1
+        1==1  
 #self.redis = StrictRedis()
 
     def process(self, tup):
@@ -18,7 +18,8 @@ class TweetCounter(Bolt):
         #Save to table
 	conn = psycopg2.connect(database="bitcount", user="postgres", password="w205project", host="localhost", port="5432")
         cur = conn.cursor()
-	cur.execute("INSERT INTO tweetcount (timestamp, tweet) VALUES ('%s','%s')" % (dt, tweet.replace("'","")))
+	cur.execute("INSERT INTO tweetcount (timestamp, tweet, dt, hour) VALUES ('%s','%s', DATE('%s'), date_part('hour', CAST('%s' as timestamp)))" % (dt, tweet.replace("'",""), dt, dt))
 	conn.commit()
 	self.emit([tweet,dt])
         self.log('%s: %s' % (tweet, dt))
+	

@@ -6,10 +6,10 @@ import datetime
 from blockchain import blockexplorer
 
 class TransactionLogger(Bolt):
-
+    
     def initialize(self, conf, ctx):
         1==1
-
+        
     def process(self, tup):
         response_dict = tup.values[0]
         hashkey = response_dict[0]
@@ -21,8 +21,10 @@ class TransactionLogger(Bolt):
         tcount = cur.fetchone()[0]
         if tcount==0:
             for transaction in transactions:
-                cur.execute("INSERT INTO transactioncount (timestamp, hashkey, transaction_id) VALUES ('%s', '%s', '%s')" % (timestamp, hashkey, str(transaction)))
+                cur.execute("INSERT INTO transactioncount (timestamp, hashkey, transaction_id, dt, hour) VALUES ('%s', '%s', '%s', DATE('%s'), date_part('hour', CAST('%s' AS timestamp)))" % (timestamp, hashkey, str(transaction), timestamp, timestamp))
                 conn.commit()
         self.emit([timestamp, hashkey, len(transactions)])
         # Log the count - just to see the topology running
         self.log('%s: %s transaction num: %d' % (hashkey, timestamp, len(transactions)))
+
+            
