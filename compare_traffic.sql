@@ -4,7 +4,7 @@ CREATE TABLE compare_traffic AS
 (SELECT a.dt as dt, 
        a.hour as hour, 
        COUNT(a.transaction_id) as num_transactions, 
-       COUNT(b.tweet) as num_tweets
+       COUNT(DISTINCT b.tweet) as num_tweets
 FROM transactioncount a
      LEFT JOIN
      tweetcount b
